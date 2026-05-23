@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEROARMOR - Feria de Ciencias</title>
+    <style>
+        /* --- VARIABLES DE COLOR (Inspiradas en tu logo) --- */
+        :root {
+            --bg-dark: #0a1118;
+            --panel-dark: #111e2e;
+            --orange-neon: #ff6a00;
+            --blue-neon: #00b4d8;
+            --text-light: #ffffff;
+            --text-gray: #a0aec0;
+        }
+
+        /* --- ESTILOS GENERALES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* --- HEADER Y LOGO --- */
+        header {
+            margin: 40px 0 20px 0;
+            text-align: center;
+        }
+
+        .logo-proyecto {
+            max-width: 280px;
+            width: 100%;
+            border-radius: 50%;
+            box-shadow: 0 0 25px rgba(0, 180, 216, 0.3);
+            border: 3px solid var(--blue-neon);
+            transition: transform 0.3s ease;
+        }
+
+        .logo-proyecto:hover {
+            transform: scale(1.03);
+        }
+
+        .grado-escolar {
+            margin-top: 15px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--orange-neon);
+            font-weight: bold;
+        }
+
+        /* --- CONTENEDOR PRINCIPAL --- */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin-bottom: 60px;
+        }
+
+        /* --- SECCIONES (PÁGINAS) --- */
+        .page {
+            display: none; /* Ocultas por defecto */
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .page.active {
+            display: block; /* Solo la activa se muestra */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- PÁGINA INICIAL: INTEGRANTES --- */
+        .grid-integrantes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .card-integrante {
+            background-color: var(--panel-dark);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            border-bottom: 4px solid var(--blue-neon);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            transition: translateY 0.3s ease;
+        }
+
+        .card-integrante:hover {
+            transform: translateY(-5px);
+            border-bottom-color: var(--orange-neon);
+        }
+
+        .foto-perfil {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            background-color: #1a2a3a; /* Fondo temporal si no hay imagen */
+        }
+
+        .card-integrante h3 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            color: var(--text-light);
+        }
+
+        .card-integrante p {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+        }
+
+        /* --- BOTONES DE NAVEGACIÓN --- */
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+        }
+
+        .btn-nav {
+            background: linear-gradient(135deg, var(--orange-neon), #e05300);
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 106, 0, 0.4);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-nav:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 106, 0, 0.6);
+        }
+
+        .btn-regresar {
+            background: linear-gradient(135deg, #3a4b5c, #232f3b);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .btn-regresar:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+        }
+
+        /* --- PÁGINA GALERÍA: MULTIMEDIA --- */
+        .seccion-titulo {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: var(--blue-neon);
+            text-transform: uppercase;
+        }
+
+        .galeria-grid {
+            display: grid;
+            /* Crea columnas de mínimo 300px distribuidas de forma automática */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .media-box {
+            background-color: var(--panel-dark);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .media-box:hover {
+            transform: scale(1.02);
+            border-color: var(--blue-neon);
+        }
+
+        .media-box img {
+            width: 100%;
+            height: 250px; /* Un poco más altas ya que no llevan texto abajo */
+            object-fit: cover;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="JOSE SMART LOGO.jpg" alt="AEROARMOR Logo" class="logo-proyecto">
+        <div class="grado-escolar">1° de Secundaria</div>
+    </header>
+
+    <div class="container">
+
+        <div id="inicio" class="page active">
+            <div class="grid-integrantes">
+                
+                <div class="card-integrante">
+                    <img src="foto-jose.jpg" alt="José Velázquez Rivas" class="foto-perfil">
+                    <h3>José Velázquez Rivas</h3>
+                    <p>Presentación, desarrollo técnico y estructuración del prototipo AEROARMOR.</p>
+                </div>
+
+                <div class="card-integrante">
+                    <img src="foto-edgard.jpg" alt="Edgard Eduardo Avilés Piña" class="foto-perfil">
+                    <h3>Edgard Eduardo Avilés Piña</h3>
+                    <p>Investigación de materiales reactivos y pruebas de absorción de impacto.</p>
+                </div>
+
+                <div class="card-integrante">
+                    <img src="foto-abelardo.jpg" alt="Abelardo Maldonado Vidal" class="foto-perfil">
+                    <h3>Abelardo Maldonado Vidal</h3>
+                    <p>Diseño ergonómico, aerodinámica de la armadura y bitácora de campo.</p>
+                </div>
+
+            </div>
+
+            <div class="nav-container">
+                <button class="btn-nav" onclick="cambiarPagina('galeria')">Ver fotos y evidencias</button>
+            </div>
+        </div>
+
+        <div id="galeria" class="page">
+            <h2 class="seccion-titulo">Evidencias del Proyecto</h2>
+            
+            <div class="galeria-grid">
+                
+                <div class="media-box">
+                    <img src="evidencia1.jpg" alt="Evidencia 1">
+                </div>
+
+                <div class="media-box">
+                    <img src="evidencia2.jpg" alt="Evidencia 2">
+                </div>
+
+                <div class="media-box">
+                    <img src="evidencia3.jpg" alt="Evidencia 3">
+                </div>
+
+                <div class="media-box">
+                    <img src="evidencia4.jpg" alt="Evidencia 4">
+                </div>
+
+                <div class="media-box">
+                    <img src="evidencia5.jpg" alt="Evidencia 5">
+                </div>
+
+                <div class="media-box">
+                    <img src="evidencia6.jpg" alt="Evidencia 6">
+                </div>
+
+            </div>
+
+            <div class="nav-container">
+                <button class="btn-nav btn-regresar" onclick="cambiarPagina('inicio')">Regresar a Integrantes</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function cambiarPagina(idPagina) {
+            // 1. Ocultar todas las páginas quitando la clase 'active'
+            const paginas = document.querySelectorAll('.page');
+            paginas.forEach(pag => pag.classList.remove('active'));
+
+            // 2. Mostrar solo la página que tiene el ID que necesitamos
+            const paginaActiva = document.getElementById(idPagina);
+            if (paginaActiva) {
+                paginaActiva.classList.add('active');
+                // Esto hace que la pantalla suba automáticamente al inicio al cambiar de página
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+    </script>
+
+</body>
+</html>
